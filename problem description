@@ -1,0 +1,16 @@
+Problem Description- CSE 301 Allocation Problem
+
+
+HOD of the computer applications department of NIT Trichy is facing a problem these days. 
+There is only 1 room (CSE-301) available in the department which is having enough capability to accommodate 
+the big strength of all the 3 MCA classes MCA 1st year, 2nd year, and 3rd year. But this room is also 
+being requested by Admin block of NIT Trichy to conduct some other departments’ exams and 
+also by T&P to conduct company written tests. HOD has the complete authorization to allocate the room to anyone.
+
+HOD is trying to make some e-learning software using the operating system concepts to:-
+
+1.	Allocate the slots to all the MCA classes, admin and T&P to use the room properly.
+2.	To utilize the room at its full capacity without any conflicts.
+
+He wants your help to create some e-learning software for him so that he may learn from that software and may
+use your software also if it is feasible. 
