@@ -1,0 +1,210 @@
+#include<stdio.h>
+void definition();
+void example();
+
+int main()
+{
+  int i;  
+  printf("\n\n\t\t*** WELCOME TO PROCESS SYNCHRONIZATION TUTORIALS***");
+  system("color 2");
+  printf("\n\n we want the  USER to know about the DEFINITIONS related to semaphores,\nbusywaiting,monitors etc");
+  printf("\n and we are solving\n");
+  printf("\"THE ROOM CSE-301 ALLOCATION PROBLEM \" with the help of ");
+  printf("process SYNCHRONIZATION");
+  printf("\n\t in which there are different classes, admin, training and placement(TP)\n ");
+  printf("are trying to aquire CSE-301.......\n");
+  
+  printf("\n\n 1:LEARN DEFINITIONS");
+  printf("\n 2:LEARN WITH THE HELP OF EXAMPLE\n");
+  scanf("%d",&i);
+  switch(i)
+  {
+    case 1:
+         definition();
+         break;
+    case 2:
+         example();
+         break;
+     default:
+          printf("\n\n\a\a\awrong choice");
+          break;
+  } 
+  system("pause");
+  system("cls");
+  system("color 4");
+  printf("\n\n\n thank you !!! visit again \n\n");
+  system("pause");
+}
+
+void definition()
+{
+   int i,j;
+   j=1  ;
+   do
+   {
+   printf("0:CRITICAL SECTION\n1:SEMAPHORES\n2:BUSY WAITING and SPIN LOCK\n3:MONITORS\n\n");
+   scanf("%d",&i);
+                
+   switch(i)
+   {
+      case 0:
+           {
+            system("cls");
+            system("color 3");
+            printf("\n\n\n\t\tConsider a system consisting of n processes {Po,P1, ..., P,-1). Each process");
+printf("has a segment of code, called a critical section, in which the process may be\nchanging common variables, updating a table, writing a file, and so on. The");
+printf("\nimportant feature of the system is that, when one process is executing in its");
+printf("critical section, no other process is to be allowed to execute in its critical section.\nThus, the execution of critical sections by the processes is mutually exclusive");
+
+printf("\nin time. The critical-section problem is to design a protocol that the processes\n");
+printf("can use to cooperate. Each process must request permission to enter its critical\n");
+             system("pause");
+            system("cls");
+           
+            }
+           break;           
+     case 1:
+          {
+            system("cls");
+            system("color 3");
+            printf("\n\n\n\tThe solutions to the critical-section problem presented in Section 7.3 are not\n");
+            printf("\neasy to generalize to more complex problems. To overcome this difficulty, we\n");
+printf("can use a synchronization tool called a semaphore. A semaphore S is an integer\n");
+printf("variable that, apart from initialization, is accessed only through two standard\n");
+printf("\natomic operations: wait and signal. These operations were originally termed\n");
+printf("\nP (for wait; from the Dutch proberen, to test) and V (for signal; from verhogen,increment");
+            system("pause");
+            system("cls");
+            
+             }
+             break;
+           
+     
+     case 2:
+            {
+            system("cls");
+            system("color 3");
+            printf("\n\n\n\tThe main disadvantage of the mutual-exclusion, and\n");
+            printf("of the semaphore definition given here, is that they all require busy waiting.");
+printf("\nWhile a process is in its critical section, any other process that tries to enter its");
+printf("\ncritical section must loop continuously in the entry code. This continual looping");
+printf("\nis clearly a problem in a real multiprogramming system, where a single CPU is");
+printf("\nshared among many processes. Busy waiting wastes CPU cycles that some other");
+printf("\nprocess might be able to use productively. This type of semaphore is also called");
+printf("\na spinlock (because the process \"spins\" while waiting for the lock). Spinlocks");
+printf("\nare useful in multiprocessor systems. The advantage of a spinlock is that no");
+printf("\ncontext switch is required when a process must wait on a lock, and a context");
+printf("\nswitch may take considerable time. Thus, when locks are expected to be held");
+printf("\nfor short times, spinlocks are useful.\n");
+            system("pause");
+            system("cls");
+           
+            }
+             break;
+      case 3:
+           {
+            system("cls");
+            system("color 3");
+            printf("\n\n\n\tAnother high-level synchronization construct is the monitor type. A monitor");
+printf("\nis characterized by a set of programmer-defined operators. The representation");
+printf("\nof a monitor type consists of declarations of variables whose values define the");
+printf("\nstate of an instance of the type, as well as the bodies of procedures or functions");
+printf("\nthat implement operations on the type. The syntax of a monitor is shown in");
+printf("\n\tThe representation of a monitor type cannot be used directly by the various");
+printf("\nprocesses. Thus, a procedure defined within a monitor can access only");
+printf("\nthose variables declared locally within the monitor and its formal parameters.");
+printf("\nSimilarly, the local variables of a monitor can be accessed by only the local procedures.");
+            system("pause");
+            system("cls");
+           
+            }
+             break;              
+     default:
+             printf("\n\a\a\a WRONG CHOICE ");
+             break;
+             }  
+             }
+             while(i!=5);
+             }      
+             
+             
+ void example()
+ {
+  int i,j;
+  j=1;    
+  system("cls");    
+  printf("\n\n\t\t****PROBLEM DESCRIPTION-cse-301 allocation problem****");
+  printf("\n\n\t In an institute a department is having only one classroom CSE-301\n");
+  printf("which is being accessed by all the MCA-I,II,III year, Admin and Training\n");
+  printf("placement (tp) cell.");
+  printf("\n \t all being diffrent processes\n");
+  printf("\nHere when one class or admin is using the classroom it goes to its");
+  printf("\n crtitcal section and no other process can aquire class at the same time");
+  printf("\n so that they can't enter their critical section");
+  printf("\n\n\t The HOD of the department is having tough time to handle this classes\n");
+  printf("he has to solve this problem to allocate the CSE-301 properly\n");
+  printf("\t He may choose one out three concepts available in OS to solve \nthis problem");
+  printf("\n\n\n\tThe concepts are \n");
+  do
+  {
+      printf("\n1:Busy waiting with spin lock\n2:without busy waiting using waiting blocked queue");
+      printf("\n3:using monitors\n");
+     printf("\nPRESS YOUR CHOICE\n");
+     scanf("%d",&i);
+     system("color 3");
+     switch(i)
+     {
+             case 1:
+                  {
+                    system("cls");
+                    printf("\n\t here the concept of semaphore comes into the picture ");
+                    printf("\nall the classes get one token number from HOD with acts as\n");
+                    printf("a semaphore value for them, Now the process with semaphore =0");
+                    printf("\ngets the CSE-301, and the other classes keep on waiting outside\n");
+                    printf("the CSE as busy waiting process so in this case\n");
+                    printf("these process are keep on spining outside CSE-301");
+                    printf("\n and waiting to aquire the lock ");
+                    printf("\nso this situation is called spin lock "); 
+                    printf("\n in this case lot of time of HOD is wasted to monitor ");
+                    printf("\n that these process are not makking any kind of noise ");
+                    printf("\n in this we have achieved mutual exclusion but alot of CPU");
+                    printf("\n cycles are wasted\n"); 
+                    system("pause");
+                    system("cls");
+                    }
+                    break;       
+              case 2:
+                   {
+                     system("cls") ;
+                     printf("\n\n\t In this case instead of waiting outside the hall");
+                     printf("\n after getting the token, the processes leave the place\n ") ;
+                     printf("\n and start doing some other work in that way they go to their");
+                     printf("\nblocked state\n\n\t whenver one process is completed it gives");
+                     printf("\n the signal so that one blocked process is called from the queue to\n the CSE-301");
+                     printf("\n\n\n \t in this case there is no rush outside CSE-301 and HOD doesn't\n need to monitor");
+                     printf("\nso the CPU cycles are saved\n"); 
+                    system("pause");
+                    system("cls");
+                     }
+                     break;
+              case 3:
+                    {
+                      system("cls");    
+                      printf("\n A monitor is kind of class data type, which is having ");
+                      printf("\n its own function and control variables");
+                      printf("\n\n Here we create a new Monitor with name CSE-Alloc");
+                      printf("\nin this monitor , we'll be having functions\n\n  gettoken()\n  test()\n  classcall()");
+                      printf("\n\n\tBy the help of these three functions we take care the ");
+                      printf("\nintegration and synchronization of different process");
+                      printf("\n\n\t with the use of MONITOR, there will be no waiting of ");
+                      printf("\n any process outside the CSE-301");
+                      printf("\n\nby using the monitors there will be complete");
+                      printf("\nsecurity of the token\n\n");
+                     system("pause");
+                      system("cls");
+                      }
+                      break;
+                      }                                              
+                      
+                      }while(j!=4);
+}
