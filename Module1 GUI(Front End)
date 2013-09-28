@@ -1,0 +1,268 @@
+<html>
+<head>
+    <title>PROCESS SYNCHRONIZATION- Busy Wait & Spin LOCK</title>
+<style type="text/css">
+#b1
+{
+position:absolute;
+left:50px;
+top:300px;
+}
+
+#b2
+{
+position:absolute;
+left:50px;
+top:300px;
+}
+
+#h2
+{
+position:absolute;
+right:10px;
+top:300px;
+
+}
+#t1
+{
+position:absolute;
+left:420px;
+top:0 px;
+}
+#m3
+{
+position:absolute;
+left:50px;
+top:500px;
+
+}
+
+#desc
+{
+position:absolute;
+left:50px;
+top:650px;
+
+}
+</style>
+
+</head>
+<body bgcolor="CCEEff">
+    <h1><center>PROCESS SYNCHRONIZATION WITH BUSY WAITING AND SPINLOCK</center></h1>
+
+<div id="t1">
+    <img src="http://nightmaremode.net/wp-content/uploads/2012/11/Japanese_classroom.jpg" alt="classroom_image" height="200px" width="500px">CLASSROOM(CSE-301) <br/> <center>CRITICAL SECTION</center>
+</div>
+
+<div id="b1">
+<img src="http://schulzlibrary.files.wordpress.com/2010/09/img_2638.jpg" alt="class_image" height="200px" width="170px">Class_1
+ </div>
+
+<div id="b2">
+<img src="http://schulzlibrary.files.wordpress.com/2010/09/img_2638.jpg" alt="class_image" height="200px" width="170px">Class_2
+ </div>
+
+<div id="h2">
+<img src="http://0.tqn.com/d/archaeology/1/0/x/F/office.JPG" alt="HOD_office"height="200px" width="200px">HOD OFFICE<br/>(CPU)
+</div>
+
+<script type="text/javascript">
+var n;
+var classfull=0;
+var timer2 = null;
+var timer1 = null;
+var s=0;
+var s1=0;
+var a=100;
+var b=200;
+var i=1;
+var a1=100;
+var b1=200;
+var x1=100;
+var y1=200;
+
+
+// to move the object at desired location..
+function moveDomObj(id,left,right,top,bottom)
+{
+  var domObj = document.getElementById(id);
+domObj.style.left = left+"px";
+  domObj.style.top = top+"px";
+domObj.style.right = right+"px";
+domObj.style.bottom = bottom+"px";
+}
+ 
+
+//used by class1 to signal class 2 that its work is done..
+function signal1(){
+var x=a;
+var y=b;
+ moveDomObj("b1",x,200,b,0);
+a+=10;
+b-=10;
+if(a<=260)
+timer2 = setTimeout(signal1, 200);
+
+}
+
+
+// used by class 2 to receive class1s' signal and to receive in its critical section'
+function signal2(){
+var x=x1;
+var y=y1;
+ moveDomObj("b2",x,200,y1,0);
+x1+=20;
+y1-=10;
+if(x1<=450)
+timer1 = setTimeout(signal2, 200);
+}
+
+//used by class 1 to reset time interval if something goes wrong
+function s1(){
+var x=a;
+var y=b;
+ moveDomObj("b1",0,200,b,0);
+a+=10;
+b-=10;
+if(a<=260)
+timer2 = setTimeout(s1, 500);
+else{
+a=100;
+b=200;
+}
+}
+
+//used by class 2 to reset time interval if something goes wrong
+function s5(){
+var x=a1;
+var y=b1;
+ moveDomObj("b2",0,200,b1,0);
+a1+=10;
+b1-=10;
+if(a1<=260)
+timer2 = setTimeout(s5, 500);
+else{
+a1=100;
+b1=200;
+}
+}
+
+
+//main function to allocate the class
+function allocate()
+{
+   // alert(classfull);
+    if(classfull==0)
+        {
+            ws();
+            alert("CLASSROOM CSE-301 allocated to Class1.. Class 1 in its critical section with mutex..");
+        }
+    else{
+        alert("CLASSROOM full.. Class 2 in its waiting state..")
+        ws5();
+      
+    }
+}
+
+//main function that is used when 1 class releases the resource..
+function free()
+{
+ signal1();
+ signal2();
+}
+
+//To move the class 1 towards the classroom to see whether they are free or not..
+function ws()
+{
+if(s==0) {
+var x=a;
+var y=b;
+ moveDomObj("b1",x,200,b,0);
+a+=20;
+b-=10;
+if(a<=450)
+timer2 = setTimeout(ws, 200);
+else{
+a=0;
+s=1;
+i=i+1;
+
+return;
+}
+}
+else{
+myVar=setInterval(function(){s1()},2500);
+}
+classfull=1;
+}
+
+var counter=0;
+
+
+//To let the class busy wait when class 1 is using the class room..
+function ws5()
+{
+if(s1==0) {
+var x=a1;
+var y=b1;
+ moveDomObj("b2",x,200,b1,0);
+
+if(a1<=450)
+    {
+        a1+=20;
+        b1+=3;
+        timer2 = setTimeout(ws5, 200);
+    }
+else if(a1>450 && a1<=880)
+    {
+       a1+=10;  
+    timer2 = setTimeout(ws5, 200);
+}
+else if(a1>880)
+    {
+        counter++;
+        if(counter==5)
+            {
+
+              alert("Busy waiting with Spin lock.. Class 2 is waisting CPU(HOD) time");
+            return;
+    }
+       // alert(counter);
+       a1-=50;
+    timer2 = setTimeout(ws5, 200);
+}
+else{
+a1=0;
+s1=1;
+return;
+}
+}
+else{
+myVar=setInterval(function(){s5()},2500);
+}
+}
+//end of ws5();
+
+
+
+
+
+
+</script>
+
+<div id="m3">
+    <br/> <br/>
+<input type="button" name="animation" value="ARRIVAL OF A CLASS" onclick="allocate()"><br><br/>
+<input type="button" name="animation" value="CLASSROOM FREE(SIGNAL)" onclick="free()"><br><br/>
+</div>
+
+    <div id="desc">
+        <h3>PROCESS to be followed :</h3>
+        <ul>
+            <li>Press "ARRIVAL OF A CLASS" button. You will see one class moving to the classroom.</li>
+            <li>Press "ARRIVAL OF A CLASS" button again.</li>
+            <li>Press "CLASSROOM FREE(SIGNAL)" button finally.</li>
+        </ul>
+    </div>
+</body>
+</html>
