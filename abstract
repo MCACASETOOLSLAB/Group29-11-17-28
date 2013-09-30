@@ -1,0 +1,23 @@
+Semaphore classRoomReady = 0
+Semaphore classRoomaccess = 1    
+Semaphore studentReady = 0         
+ 
+def classroom():
+  while true:                   # Run in an infinite loop.
+    wait(studentReady)          
+    wait(classRoomaccess)         
+    signal(classRoomReady)        
+    signal(classRoomaccess)       
+    # (Can occupy class)
+ 
+def students():
+  while true:                   # Run in an infinite loop to simulate multiple customers.
+    wait(classRoomaccess)         
+    if classRoomaccess = 1: 
+      signal(studentReady)         
+      signal(classRoomaccess)     
+      wait(classRoomReady)        
+      # (Have class)
+    else:                       
+      signal(classRoomaccess)     #   but don't forget to release the lock on the classroom!
+      # (Leave without having class)
