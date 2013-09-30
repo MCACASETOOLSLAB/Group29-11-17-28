@@ -1,0 +1,276 @@
+ <html>
+<head>
+    <title>PROCESS SYNCHRONIZATION without busy waiting</title>
+<style type="text/css">
+#b1
+{
+position:absolute;
+left:50px;
+top:300px;
+}
+
+#b2
+{
+position:absolute;
+left:50px;
+top:300px;
+}
+	
+#b3
+{
+position:absolute;
+left:50px;
+top:300px;
+}
+
+#t1
+{
+position:absolute;
+left:420px;
+top:0 px;
+}
+#m3
+{
+position:absolute;
+left:50px;
+top:500px;
+
+}
+
+#desc
+{
+position:absolute;
+left:50px;
+top:650px;
+
+}
+
+#h2
+{
+position:absolute;
+right:100px;
+top:480px;
+
+}
+
+</style>
+
+</head>
+<body bgcolor="grey">
+    <h2><u>Synchronization without busy waiting</u></h2>
+
+<div id="t1">
+    <img src="http://nightmaremode.net/wp-content/uploads/2012/11/Japanese_classroom.jpg
+" alt="classroom_image" height="200px" width="500px">CLASSROOM(CSE-301) <br/> <center>CRITICAL SECTION</center>
+</div>
+
+<div id="b1">
+<img src="http://schulzlibrary.files.wordpress.com/2010/09/img_2638.jpg" alt="class_image" height="200px" width="170px">Class_1
+ </div>
+
+<div id="b2">
+<img src="http://schulzlibrary.files.wordpress.com/2010/09/img_2638.jpg" alt="class_image" height="200px" width="170px">Class_2
+ </div>
+
+<div id="b3">
+<img src="http://schulzlibrary.files.wordpress.com/2010/09/img_2638.jpg" alt="class_image" height="200px" width="170px">Class_3
+ </div>
+
+ <div id="h2">
+<h3>BLOCK QUEUE</h3>
+<img src="http://0.tqn.com/d/archaeology/1/0/x/F/office.JPG" alt="HOD_office"height="200px" width="200px">HOD OFFICE<br/>(CPU)
+</div> 
+
+<script type="text/javascript">
+var n;
+var classfull=0;
+var timer2 = null;
+var timer1 = null;
+var a=100;
+var b=200;
+var a1=100;
+var b1=200;
+var w=0;
+var a3=100;
+var b3=200;
+
+
+// to move the object at desired location..
+
+function moveDomObj(id,left,right,top,bottom)
+{
+  var domObj = document.getElementById(id);
+domObj.style.left = left+"px";
+  domObj.style.top = top+"px";
+domObj.style.right = right+"px";
+domObj.style.bottom = bottom+"px";
+}
+ 
+
+
+
+//main function that is used when 1 class releases the resource..
+function free()
+{
+ signal1();
+ signal2();
+}
+
+
+
+
+
+
+//used by class1 to signal class 2 and to wake it up..
+
+function signal1()
+{
+var x=a;
+var y=b;
+ moveDomObj("b1",x,200,b,0);
+a+=10;
+b-=10;
+if(a<=860)
+timer2 = setTimeout(signal1, 200);
+
+}
+
+
+// used by class 2 to receive class 1  signal and to go in its critical section'
+
+function signal2(){
+var x=a1;
+var y=b1;
+ moveDomObj("b2",x,200,b1,0);
+a1-=20;
+b1-=8.5;
+if(a1>=450)
+timer1 = setTimeout(signal2, 200);
+}
+
+
+
+
+
+//main function to allocate the class
+
+function allocate()
+{
+   // alert(classfull);
+    if(classfull==0)
+        {
+            ws();
+            alert("Classroom CSE-301 is empty. CLASS 1 gets it and go to its critical section");
+        }
+    else if(classfull==1 && w==0)
+    {
+        alert("CSE 301 is occupied..CLASS 2 goes into blocked queue and sleeps");
+        ws5();
+      
+    }
+else if(classfull==1 && w==1)
+{
+alert("CSE 301 is occupied..class 3 goes into blocked queue and joins class 2");
+ws6();
+}
+else
+{
+alert("NO more class waiting to wash clothes..");
+}
+}
+
+
+
+function ws6()
+{
+w=2;
+  var x=a3;
+  var y=b3;
+moveDomObj("b3",x,200,b3,0);
+
+if(a3<=450)
+    {
+        a3+=20;
+        b3+=3;
+        timer2 = setTimeout(ws6, 200);
+    }
+else if(a3>450 && a3<=880)
+    {
+       a3+=10;  
+    timer2 = setTimeout(ws6, 200);
+
+}
+w=2;
+}
+
+
+
+
+//To move the class 1 towards the classroom to see whether they are free or not..
+function ws()
+{
+var x=a;
+var y=b;
+ moveDomObj("b1",x,200,b,0);
+a+=20;
+b-=8.5;
+if(a<=450)
+timer2 = setTimeout(ws, 200);
+
+classfull=1;
+return;
+}
+
+
+
+
+//To let the class 2 go to the waiting queue when class 1 is using the class room..
+function ws5()
+{
+w=1;
+var x=a1;
+var y=b1;
+ moveDomObj("b2",x,200,b1,0);
+
+if(a1<=450)
+    {
+        a1+=20;
+        b1+=3;
+        timer2 = setTimeout(ws5, 200);
+    }
+else if(a1>450 && a1<=880)
+    {
+       a1+=10;  
+    timer2 = setTimeout(ws5, 200);
+
+}
+else{
+w=1;
+return;
+}
+}
+
+
+
+
+
+
+</script>
+
+<div id="m3">
+    <br/> <br/>
+<input type="button" name="animation" value="ARRIVAL OF A CLASS" onclick="allocate()"><br><br/>
+<input type="button" name="animation" value="CLASSROOM FREE(SIGNAL)" onclick="free()"><br><br/>
+</div>
+
+    <div id="desc">
+        <h3>STEPS to be followed :</h3>
+        <ul>
+            <li>Press "ARRIVAL OF A CLASS" button. You will see one class moving to the classroom.</li>
+            <li>Press "ARRIVAL OF A CLASS" button again for class 2 to go in blocked queue.</li>
+		<li>Press "ARRIVAL OF A CLASS" button again for class 3 to join the blocked queue.</li>
+            <li>Press "CLASSROOM FREE(SIGNAL)" button finally.</li>
+        </ul>
+    </div>
+</body>
+</html>
